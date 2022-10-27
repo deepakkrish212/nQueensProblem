@@ -4,12 +4,15 @@ public class nQueens {
     
     public static void main(String[] args){
         //Board and queen object
-        Queen queen = new Queen(0, 0);
+        // Queen queen = new Queen(0, 0);
         
-        int[][] board = new int[8][8];
+        int[][] boardArray = new int[8][8];
+        Board board = new Board(boardArray, 8);
 
-        for(int x=0; x<board[0].length){
-            
+        if (placeQueens(board, 0)) {
+            board.printBoard();
+        } else {
+            System.out.print("No Solution");
         }
 
 
@@ -82,9 +85,14 @@ public class nQueens {
         public boolean canPlace(Queen q) {
             // Check if the queen can move to the row and column
             for (int i = 0; i < queens; i++) {
-                if (q.canMove(i, q.getCol())) {
-                    return false;
+                for(int j=0; j < queens; j++) {
+                    if (this.board[i][j] == 1){
+                        if (q.canMove(q.getRow(), q.getCol())) {
+                            return false;
+                        }
+                    }
                 }
+                
             }
 
             return true;
@@ -103,9 +111,9 @@ public class nQueens {
     }
 
     // Recursive method to place the queens
-    public static boolean placeQueens(Board board, int queens) {
-        // If the number of queens is 0, then we have placed all the queens
-        if (queens == 0) {
+    public static boolean placeQueens(Board board, int column) {
+        // If the number of column is 0, then we have placed all the column
+        if (column >=  board.queens) {
             return true;
         }
 
@@ -121,7 +129,7 @@ public class nQueens {
                     board.placeQueen(q);
 
                     // If the queen can be placed in the board
-                    if (placeQueens(board, queens - 1)) {
+                    if (placeQueens(board, column + 1)) {
                         return true;
                     }
 
