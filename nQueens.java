@@ -81,12 +81,13 @@ public class nQueens {
         }
 
         // Method to see if the queen can be placed in the board
-        public boolean canPlace(Queen q) {
+        public boolean canPlace(int row, int col) {
             // Check if the queen can move to the row and column
             for (int i = 0; i < queens; i++) {
                 for (int j = 0; j < queens; j++) {
                     if (this.board[i][j] == 1) {
-                        if (q.canMove(q.getRow(), q.getCol())) {
+                        Queen queen = new Queen(i, j);
+                        if (queen.canMove(row, col)) {
                             return false;
                         }
                     }
@@ -98,13 +99,13 @@ public class nQueens {
         }
 
         // Method to place the queen in the board
-        public void placeQueen(Queen q) {
-            board[q.getRow()][q.getCol()] = 1;
+        public void placeQueen(int row, int col) {
+            board[row][col] = 1;
         }
 
         // Method to remove the queen from the board
-        public void removeQueen(Queen q) {
-            board[q.getRow()][q.getCol()] = 0;
+        public void removeQueen(int row, int col) {
+            board[row][col] = 0;
         }
 
     }
@@ -118,23 +119,13 @@ public class nQueens {
 
         // Loop through the board
         for (int i = 0; i < board.board.length; i++) {
-            for (int j = 0; j < board.board[i].length; j++) {
-                // Create a new queen
-                Queen q = new Queen(i, j);
-
-                // If the queen can be placed in the board
-                if (board.canPlace(q)) {
-                    // Place the queen in the board
-                    board.placeQueen(q);
-
-                    // If the queen can be placed in the board
-                    if (placeQueens(board, column + 1)) {
-                        return true;
-                    }
-
-                    // Remove the queen from the board
-                    board.removeQueen(q);
+            Queen q = new Queen(i, column);
+            if (board.canPlace(i, column)) {
+                board.placeQueen(i, column);
+                if (placeQueens(board, column + 1)) {
+                    return true;
                 }
+                board.removeQueen(i, column);
             }
         }
         return false;
