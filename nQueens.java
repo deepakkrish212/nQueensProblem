@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class nQueens {
 
     public static void main(String[] args) {
@@ -63,11 +61,11 @@ public class nQueens {
 
     public static class Board {
         private int[][] board;
-        private int queens;
+        private int size;
 
-        public Board(int[][] board, int queens) {
+        public Board(int[][] board, int size) {
             this.board = board;
-            this.queens = queens;
+            this.size = size;
         }
 
         // Print the board
@@ -82,9 +80,9 @@ public class nQueens {
 
         // Method to see if the queen can be placed in the board
         public boolean canPlace(int row, int col) {
-            // Check if the queen can move to the row and column
-            for (int i = 0; i < queens; i++) {
-                for (int j = 0; j < queens; j++) {
+            // Check if the existing queen can move to the row and column
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
                     if (this.board[i][j] == 1) {
                         Queen queen = new Queen(i, j);
                         if (queen.canMove(row, col)) {
@@ -112,22 +110,28 @@ public class nQueens {
 
     // Recursive method to place the queens
     public static boolean placeQueens(Board board, int column) {
-        // If the number of column is 0, then we have placed all the column
-        if (column >= board.queens) {
+        // If the column is greater than the size of the board, then return true because
+        // all the queens have been placed
+        if (column >= board.size) {
             return true;
         }
 
-        // Loop through the board
+        // Loop through the board to place the queen in the row and column
+        // If it can't be placed, then remove the queen and try the next row
+        // If the queen can't be placed in any row, then return false
         for (int i = 0; i < board.board.length; i++) {
-            Queen q = new Queen(i, column);
             if (board.canPlace(i, column)) {
                 board.placeQueen(i, column);
+                // If the queen can be placed, then place the next queen
                 if (placeQueens(board, column + 1)) {
+                    // If the queen can be placed, then return true
                     return true;
                 }
+                // If the queen can't be placed, then remove the queen and try the next row
                 board.removeQueen(i, column);
             }
         }
+        // If the queen can't be placed in any row, then return false
         return false;
     }
 
