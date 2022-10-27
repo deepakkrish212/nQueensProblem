@@ -1,18 +1,17 @@
 import java.util.Scanner;
 
 public class nQueens {
+    
+    public static void main(String[] args){
+        //Board and queen object
+        Queen queen = new Queen(0, 0);
+        
+        int[][] board = new int[8][8];
 
-    // Solve the n-queens problem using backtracking
-
-    public static void main(String[] args) {
-        int[][] board;
-
-        // Intaniate the board and set all values to 0
-        board = new int[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board[i][j] = 0;
-            }
+        if (placeQueens(board, 0)) {
+            board.printBoard();
+        } else {
+            System.out.print("No Solution");
         }
 
         Board b = new Board(board, 8);
@@ -86,9 +85,14 @@ public class nQueens {
         public boolean canPlace(Queen q) {
             // Check if the queen can move to the row and column
             for (int i = 0; i < queens; i++) {
-                if (q.canMove(i, q.getCol())) {
-                    return false;
+                for(int j=0; j < queens; j++) {
+                    if (this.board[i][j] == 1){
+                        if (q.canMove(q.getRow(), q.getCol())) {
+                            return false;
+                        }
+                    }
                 }
+                
             }
 
             return true;
@@ -107,9 +111,9 @@ public class nQueens {
     }
 
     // Recursive method to place the queens
-    public static boolean placeQueens(Board board, int col) {
+    public static boolean placeQueens(Board board, int queens) {
         // If the number of queens is 0, then we have placed all the queens
-        if (col == 0) {
+        if (queens == 0) {
             return true;
         }
 
@@ -125,7 +129,7 @@ public class nQueens {
                     board.placeQueen(q);
 
                     // If the queen can be placed in the board
-                    if (placeQueens(board, col - 1)) {
+                    if (placeQueens(board, queens - 1)) {
                         return true;
                     }
 
