@@ -1,17 +1,21 @@
 import java.util.Scanner;
 
 public class nQueens {
-    
-    public static void main(String[] args){
-        //Board and queen object
-        Queen queen = new Queen(0, 0);
-        
-        int[][] board = new int[8][8];
 
-        for(int x=0; x<board[0].length){
-            
+    // Solve the n-queens problem using backtracking
+
+    public static void main(String[] args) {
+        int[][] board;
+
+        // Intaniate the board and set all values to 0
+        board = new int[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                board[i][j] = 0;
+            }
         }
 
+        Board b = new Board(board, 8);
 
     }
 
@@ -103,9 +107,9 @@ public class nQueens {
     }
 
     // Recursive method to place the queens
-    public static boolean placeQueens(Board board, int queens) {
+    public static boolean placeQueens(Board board, int col) {
         // If the number of queens is 0, then we have placed all the queens
-        if (queens == 0) {
+        if (col == 0) {
             return true;
         }
 
@@ -121,7 +125,7 @@ public class nQueens {
                     board.placeQueen(q);
 
                     // If the queen can be placed in the board
-                    if (placeQueens(board, queens - 1)) {
+                    if (placeQueens(board, col - 1)) {
                         return true;
                     }
 
