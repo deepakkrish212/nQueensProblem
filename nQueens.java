@@ -113,10 +113,10 @@ public class nQueens {
     }
 
     // Recursive method to place the queens
-    public static boolean placeQueens(Board board, int noQueens) {
+    public static boolean placeQueens(Board board, int col) {
         // If the column is greater than the size of the board, then return true because
         // all the queens have been placed
-        if (noQueens >= board.size) {
+        if (col >= board.size) {
             return true;
         }
 
@@ -124,15 +124,15 @@ public class nQueens {
         // If it can't be placed, then remove the queen and try the next row
         // If the queen can't be placed in any row, then return false
         for (int i = 0; i < board.board.length; i++) {
-            if (board.canPlace(i, noQueens)) {
-                board.placeQueen(i, noQueens);
+            if (board.canPlace(i, col)) {
+                board.placeQueen(i, col);
                 // If the queen can be placed, then place the next queen
-                if (placeQueens(board, noQueens + 1)) {
+                if (placeQueens(board, col + 1)) {
                     // If the queen can be placed, then return true
                     return true;
                 }
                 // If the queen can't be placed, then remove the queen and try the next row
-                board.removeQueen(i, noQueens);
+                board.removeQueen(i, col);
             }
         }
         // If the queen can't be placed in any row, then return false
