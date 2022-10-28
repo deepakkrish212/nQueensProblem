@@ -8,7 +8,6 @@ public class nQueens {
         Board board = new Board(boardArray, 8); // This the number of queens to be placed
 
         if (placeQueens(board, 0)) {
-            System.out.println("0 means empty space, 1 means queen");
             board.printBoard();
         } else {
             System.out.print("No Solution");
