@@ -5,7 +5,7 @@ public class nQueens {
         // Queen queen = new Queen(0, 0);
 
         int[][] boardArray = new int[8][8];
-        Board board = new Board(boardArray, 8);
+        Board board = new Board(boardArray, 8); // This the number of queens to be placed
 
         if (placeQueens(board, 0)) {
             System.out.println("0 means empty space, 1 means queen");
@@ -110,10 +110,10 @@ public class nQueens {
     }
 
     // Recursive method to place the queens
-    public static boolean placeQueens(Board board, int column) {
+    public static boolean placeQueens(Board board, int noQueens) {
         // If the column is greater than the size of the board, then return true because
         // all the queens have been placed
-        if (column >= board.size) {
+        if (noQueens >= board.size) {
             return true;
         }
 
@@ -121,15 +121,15 @@ public class nQueens {
         // If it can't be placed, then remove the queen and try the next row
         // If the queen can't be placed in any row, then return false
         for (int i = 0; i < board.board.length; i++) {
-            if (board.canPlace(i, column)) {
-                board.placeQueen(i, column);
+            if (board.canPlace(i, noQueens)) {
+                board.placeQueen(i, noQueens);
                 // If the queen can be placed, then place the next queen
-                if (placeQueens(board, column + 1)) {
+                if (placeQueens(board, noQueens + 1)) {
                     // If the queen can be placed, then return true
                     return true;
                 }
                 // If the queen can't be placed, then remove the queen and try the next row
-                board.removeQueen(i, column);
+                board.removeQueen(i, noQueens);
             }
         }
         // If the queen can't be placed in any row, then return false
